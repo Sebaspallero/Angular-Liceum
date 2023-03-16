@@ -1,0 +1,25 @@
+div{
+    background-color: var(--grey-clr);
+    height: 70vh;
+    padding: 3em;
+    margin-left: 8%;
+   
+}
+
+p{
+    color: var(--blue-clr);
+    text-align: center;
+}
+
+.container-msg{
+    background-color: var(--white-clr);
+    padding: 1em;
+    border-radius: 15px;
+    box-shadow: var(--box-shadow);
+    height: 3em;
+    width: fit-content;
+}
+
+span{
+    color: var(--accent-clr);
+}
