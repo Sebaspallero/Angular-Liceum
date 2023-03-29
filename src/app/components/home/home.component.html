@@ -1,5 +1,20 @@
-<div>
-    <div class="container-msg">
-        <p>Bienvenido a tu <span>Dashboard</span></p>
+<main>
+    <div class="container-class-status">
+        <div class="container-msg">
+            <h3 class="msg-title">Hola de nuevo <span>User</span>!</h3>
+            <p class="msg-class-status">Actualmente no tienes ningún curso pendiente... Este es el mejor momento para anotarte a una nueva aventura!</p>
+            <button class="btn-class">Anotarme</button>
+        </div>
+        <img src="../../../assets/usuario png.png" class="user-img">
     </div>
-</div>
+    <h3 class="section-title">Estudiantes</h3>
+    <div *ngFor="let student of students" class="students-box">
+        <img *ngIf="student.gender == 'male'" src="../../../assets/profile.png" class="profile-pic" />
+        <img *ngIf="student.gender == 'female'" src="../../../assets/profilewoman.png" class="profile-pic" />
+        <p  [ngClass]="student.gender == 'female' ? 'female-text' : 'male-text'">Nombre: {{student.firstName + " " + student.lastName}}</p>
+        <p class="student-text">Edad: {{student.age}}</p>
+        <p class="student-text">Email: {{student.email}}</p>
+        <p class="student-text">Cumpleaños: {{student.birthdate | date: "mediumDate" : 'es'}}</p>
+    </div>
+</main>
+

@@ -1,16 +1,6 @@
 .sidebar{
-    height:100%;
-    width: 15%;
     background-color: var(--blue-clr);
     border-top-right-radius: 10px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: inline-block;
-    height: 100%;
-    
 }
 
 .sidebar-title-box{
@@ -51,14 +41,14 @@
     flex-direction: row;
     gap: .2em;
     cursor: pointer;
-    padding: .5em;
     border-radius: 1em 0px 0px 1em;
 }
 
 .list-item-box:hover{
     background-color: var(--grey-clr);
-    transition: .4s;
+    transition: .6s ease;
 }
+
 
 .list-item-icon{
     color:var(--white-clr)
@@ -66,6 +56,8 @@
 
 .list-item-text{
     color:var(--white-clr);
+    font-size: var(--fs-text);
+    padding: .5em;
     height: 100%;
     width: 100%;
 }

@@ -4,13 +4,12 @@
     justify-content: space-between;
     align-items: center;
     padding: 1em .5em;
-    background-color: var(--white-clr);
 }
 
 .header-title{
     color:var(--dark-blue-clr);
     font-size: var(--fs-subtitle);
-    margin-left: 12em;
+    margin-left: 1em;
 }
 
 .userinfo-box{
