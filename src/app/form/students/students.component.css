@@ -1,28 +1,17 @@
-main{
-    background-color: var(--grey-clr);
-    padding: 2em;
-    overflow-y: scroll; 
-    height:100%;
-}
 
-.container-class-status{
+form{
     background-color: var(--white-clr);
     padding: 1em;
     border-radius: 15px;
     box-shadow: var(--box-shadow);
-    width: 60%;
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 2em;
+    width: 60%;
+    flex-direction: column;
+    gap: 1em;
     margin: 1em 0em 3em 0em;
-   
+
 }
 
-.container-msg{
-    width: 50%;
-    padding: 1em;
-}
 
 .msg-title{
     font-size: var(--fs-subtitle);
@@ -30,55 +19,53 @@ main{
     margin-bottom: 1em;
 }
 
-span{
-    color: var(--accent-clr);
+.form-input{
+    border-radius: 30px;
+    padding: 1em;
+    border: 1px solid var(--dark-blue-clr);
+    outline: none;
 }
 
-
-.msg-class-status{
-    font-size: var(--fs-text);
-    color: var(--dark-blue-clr);
-    margin-bottom: 1.5em;
+.form-input:focus {
+    border: 1px solid var(--blue-clr);
 }
 
-.btn-class{
+.is-invalid{
+    border: 1px solid var(--accent-clr);
+    border-radius: 30px;
+}
+
+select{
+    border-radius: 30px;
+    padding: 1em;
+    border: 1px solid var(--dark-blue-clr);
+    outline: none;
+}
+
+button{
     color:var(--white-clr);
     background-color: var(--blue-clr);
     box-shadow: var(--box-shadow);
-    width: 9em;
     height: 3.3em;
     border-radius: 50px;
     border: none;
     box-shadow: none;
     cursor: pointer;
     transition: 0.8s ease;
+    margin-top: 1em;
 }
 
-.btn-class:hover{
-    transform: scale(1.05);
+button:hover{
+    transform: scale(1.02);
 }
 
-/* .btn-class::after{
-    content: "";
-    position: absolute;
-    z-index: 3;
-    height: 1em;
-    width: 1em;
-    border-radius: 50%;
-    background-color: var(--blue-clr);
-    display: inline-block;
-    transition: 0.8s ease;
-}
+/* ------------------ */
 
 
-.btn-class:hover ::after{
-    transform: translate(40px, 0px);
-}
- */
- 
 .section-title{
     font-size: var(--fs-subtitle);
     color: var(--dark-blue-clr);
+    margin-bottom: 1em;
 }
 
  .students-box{

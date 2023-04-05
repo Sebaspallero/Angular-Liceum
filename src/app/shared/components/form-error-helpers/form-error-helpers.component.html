@@ -1,0 +1,13 @@
+<div *ngFor="let error of formErrors | keyvalue">
+    <ng-container [ngSwitch]="error.key">
+        <p *ngSwitchCase="'required'" class="invalid-feedback">
+            Este campo es requerido
+        </p>
+        <p *ngSwitchCase="'minlength'" class="invalid-feedback">
+            El campo requiere al menos {{error.value.requiredLength}} caracteres
+        </p>
+        <p *ngSwitchCase="'email'" class="invalid-feedback">
+            Email no valido
+        </p>
+    </ng-container>
+</div>

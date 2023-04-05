@@ -6,6 +6,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HomeComponent } from './components/home/home.component';
 import { PageWrapperComponent } from './components/page-wrapper/page-wrapper.component';
+import { StudentsModule } from './form/students/students.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { PageWrapperComponent } from './components/page-wrapper/page-wrapper.com
     PageWrapperComponent,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    StudentsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
