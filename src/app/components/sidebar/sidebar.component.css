@@ -1,3 +1,5 @@
+@import "https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round";
+
 .sidebar{
     background-color: var(--blue-clr);
     border-top-right-radius: 10px;
@@ -39,6 +41,7 @@
 .list-item-box{
     display: flex;
     flex-direction: row;
+    align-items: center;
     gap: .2em;
     cursor: pointer;
     border-radius: 1em 0px 0px 1em;
@@ -47,21 +50,28 @@
 .list-item-box:hover{
     background-color: var(--grey-clr);
     transition: .6s ease;
+    color: var(--blue-clr);
 }
 
 
 .list-item-icon{
-    color:var(--white-clr)
+    color:var(--white-clr);
+    padding: .2em;
+    
 }
+
+.list-item-box:hover .list-item-icon{
+    color: var(--blue-clr);
+}
+
 
 .list-item-text{
     color:var(--white-clr);
     font-size: var(--fs-text);
     padding: .5em;
-    height: 100%;
-    width: 100%;
 }
 
-.list-item-text:hover{
+.list-item-box:hover .list-item-text{
     color: var(--blue-clr);
 }
+

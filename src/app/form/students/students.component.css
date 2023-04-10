@@ -42,6 +42,7 @@ select{
     outline: none;
 }
 
+
 button{
     color:var(--white-clr);
     background-color: var(--blue-clr);
@@ -97,4 +98,11 @@ button:hover{
     height: 50px;
     width: 50px;
     border-radius: .3em
+}
+
+.delete{
+    color: var(--accent-clr);
+    font-weight: bold;
+    font-size: var(--fs-subtitle);
+    cursor: pointer;
 }

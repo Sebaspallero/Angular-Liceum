@@ -13,7 +13,7 @@ import { FormErrorHelpersModule } from 'src/app/shared/components/form-error-hel
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormErrorHelpersModule
+    FormErrorHelpersModule,
   ],
   exports:[
     StudentsComponent

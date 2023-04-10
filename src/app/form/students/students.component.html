@@ -55,11 +55,11 @@
             formControlName="course"
             [class.is-invalid]="courseControl.invalid && courseControl.touched"
             >
-            <option value="react">React</option>
-            <option value="angular">Angular</option>
-            <option value="vue">Vue</option>
-            <option value="ux">UX</option>
-            <option value="ui">UI</option>
+            <option value="React">React</option>
+            <option value="Angular">Angular</option>
+            <option value="Vue">Vue</option>
+            <option value="UX">UX</option>
+            <option value="UI">UI</option>
           </select>
         <ng-container *ngIf="courseControl.touched">
             <app-form-error-helpers [formErrors]="courseControl.errors"></app-form-error-helpers>
@@ -76,4 +76,6 @@
     <p>Nombre: <span [ngClass]="student.gender == 'F' ? 'female-text' : 'male-text'">{{student.name + " " + student.lastName}}</span></p>
     <p class="student-text">Email: {{student.email}}</p>
     <p class="student-text">Curso: {{student.course}}</p>
+    <p class="student-text">ID: {{student.id}}</p>
+    <span (click)="delete($event, student.id)" class="delete">X</span>
 </div> 

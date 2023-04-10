@@ -13,7 +13,7 @@ export class StudentsComponent {
   studentsForm: FormGroup;
 
   nameControl = new FormControl(
-    '',
+    'sebstian',
     [
       Validators.required,
       Validators.minLength(3)
@@ -21,14 +21,14 @@ export class StudentsComponent {
   );
 
   lastNameControl = new FormControl( 
-    '',
+    'pallero',
     [
       Validators.required
     ]
   );
 
   emailControl = new FormControl( 
-    '',
+    'sebastianoria@hotmail.com',
     [
       Validators.required,
       Validators.email
@@ -61,12 +61,20 @@ export class StudentsComponent {
 
   onSubmit():void{
     if(this.studentsForm.valid){
-      this.studentsList.push(this.studentsForm.value);
-      this.studentsForm.reset();
+      this.studentsList.push({...this.studentsForm.value, id: Date.now()});
+      /* this.studentsForm.reset(); */
     }
     else{
       this.studentsForm.markAllAsTouched();
     }
     
   }
+
+  public delete(event: any, id: number){
+     let students = this.studentsList
+    const deletedUser = students.filter(student => student.id !== id);
+    students = deletedUser
+  }
+
+
 }
