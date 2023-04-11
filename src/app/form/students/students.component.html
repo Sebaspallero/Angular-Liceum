@@ -49,7 +49,7 @@
             <app-form-error-helpers [formErrors]="genderControl.errors"></app-form-error-helpers>
         </ng-container>
 
-        <label>curso</label>
+        <label>Curso</label>
         <select 
             name="curso"
             formControlName="course"
@@ -70,12 +70,46 @@
 
 
 <h3 class="section-title">Estudiantes</h3>
-<div *ngFor="let student of studentsList" class="students-box">
-    <img *ngIf="student.gender == 'M'" src="../../../assets/profile.png" class="profile-pic" />
-    <img *ngIf="student.gender == 'F'" src="../../../assets/profilewoman.png" class="profile-pic" />
-    <p>Nombre: <span [ngClass]="student.gender == 'F' ? 'female-text' : 'male-text'">{{student.name + " " + student.lastName}}</span></p>
-    <p class="student-text">Email: {{student.email}}</p>
-    <p class="student-text">Curso: {{student.course}}</p>
-    <p class="student-text">ID: {{student.id}}</p>
-    <span (click)="delete($event, student.id)" class="delete">X</span>
-</div> 
+<div class="students-list-box">
+    <div *ngFor="let student of studentsList" class="students-box">
+        <div class="edit-box">
+            <img *ngIf="student.gender == 'M'" src="../../../assets/profile.png" class="profile-pic" />
+            <img *ngIf="student.gender == 'F'" src="../../../assets/profilewoman.png" class="profile-pic" />
+           <div class="icons-box">
+            <mat-icon (click)="openEdit($event, student.id)" class="edit-icon material-icons-outlined">edit</mat-icon>
+            <div (click)="delete($event, student.id)" class="delete">x</div>     
+           </div>
+        </div>
+        <p class="student-text">Nombre: <span [ngClass]="student.gender == 'F' ? 'female-text' : 'male-text'">{{student.name + " " + student.lastName | titlecase}}</span></p>
+        <p class="student-text">Email: {{student.email}}</p>
+        <p class="student-text">Curso: <span>{{student.course}}</span></p>
+    </div> 
+</div>
+
+<div *ngIf="isEdited">
+    <form *ngFor="let student of editStudent" (ngSubmit)="onEdit()">
+        <h3 class="section-title">Editar Perfil</h3>
+        <label>Nombre</label>
+        <input 
+            type="text" 
+            placeholder="Nombre"
+            class="form-input"
+            value={{student.name}}
+         />
+         <label>Apellido</label>
+        <input 
+            type="text" 
+            placeholder="Apellido"
+            class="form-input"
+            value={{student.lastName}}
+         />
+         <label>Email</label>
+        <input 
+            type="email" 
+            placeholder="E-mail"
+            class="form-input"
+            value={{student.email}}
+         />
+         <button type="submit">Enviar</button>
+    </form>
+</div>

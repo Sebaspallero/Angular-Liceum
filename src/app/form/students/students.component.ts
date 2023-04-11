@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -8,12 +8,29 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class StudentsComponent {
 
-  studentsList: any[] = [];
+  studentsList: any[] = [
+    {
+      name:'sebastian',
+      lastName:'pallero',
+      email:'sebastian@emalil.com',
+      gender:'M',
+      course:'Angular',
+      id: 1
+    },
+    {
+      name:'Maria',
+      lastName:'Perez',
+      email:'maria@emalil.com',
+      gender:'F',
+      course:'React',
+      id: 2
+    }
+  ];
 
   studentsForm: FormGroup;
 
   nameControl = new FormControl(
-    'sebstian',
+    '',
     [
       Validators.required,
       Validators.minLength(3)
@@ -21,14 +38,14 @@ export class StudentsComponent {
   );
 
   lastNameControl = new FormControl( 
-    'pallero',
+    '',
     [
       Validators.required
     ]
   );
 
   emailControl = new FormControl( 
-    'sebastianoria@hotmail.com',
+    '',
     [
       Validators.required,
       Validators.email
@@ -62,19 +79,38 @@ export class StudentsComponent {
   onSubmit():void{
     if(this.studentsForm.valid){
       this.studentsList.push({...this.studentsForm.value, id: Date.now()});
-      /* this.studentsForm.reset(); */
+      this.studentsForm.reset();
     }
     else{
       this.studentsForm.markAllAsTouched();
     }
     
-  }
+  };
+
+  public isDeleted = false;
 
   public delete(event: any, id: number){
-     let students = this.studentsList
-    const deletedUser = students.filter(student => student.id !== id);
-    students = deletedUser
+    //Animación de borrar => [class.deleted]="isDeleted == true"
+    this.isDeleted = !this.isDeleted;
+    //Borrar
+    setTimeout(() => {
+      const deletedUser = this.studentsList.filter(student => student.id !== id);
+      this.studentsList = deletedUser
+    }, 500);
+  };
+
+
+  public isEdited = false;
+  editStudent: any = [{}]
+
+  public openEdit(event:any, id:number){
+    this.isEdited = !this.isEdited
+    const student = this.studentsList.filter(student=>student.id == id);
+    this.editStudent = student
   }
 
+  onEdit():void{
+    this.isEdited = !this.isEdited
+  }
 
 }

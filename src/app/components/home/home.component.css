@@ -3,7 +3,7 @@ main{
     padding: 2em;
     overflow-y: scroll; 
     height:100%;
-   
+ 
 }
 
 .container-class-status{
@@ -17,7 +17,6 @@ main{
     align-items: center;
     gap: 2em;
     margin: 1em 0em 3em 0em;
-   
 }
 
 .container-msg{
@@ -58,24 +57,6 @@ span{
 .btn-class:hover{
     transform: scale(1.05);
 }
-
-/* .btn-class::after{
-    content: "";
-    position: absolute;
-    z-index: 3;
-    height: 1em;
-    width: 1em;
-    border-radius: 50%;
-    background-color: var(--blue-clr);
-    display: inline-block;
-    transition: 0.8s ease;
-}
-
-
-.btn-class:hover ::after{
-    transform: translate(40px, 0px);
-}
- */
  
 .section-title{
     font-size: var(--fs-subtitle);
@@ -112,3 +93,4 @@ span{
     width: 50px;
     border-radius: .3em
 }
+
