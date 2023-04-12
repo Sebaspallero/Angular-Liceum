@@ -89,7 +89,7 @@ export class StudentsComponent {
 
   public isDeleted = false;
 
-  public delete(event: any, id: number){
+  public onDelete(id: number){
     //Animación de borrar => [class.deleted]="isDeleted == true"
     this.isDeleted = !this.isDeleted;
     //Borrar
@@ -100,17 +100,22 @@ export class StudentsComponent {
   };
 
 
-  public isEdited = false;
-  editStudent: any = [{}]
+  studentId: any;
+  isEditing = false;
 
-  public openEdit(event:any, id:number){
-    this.isEdited = !this.isEdited
-    const student = this.studentsList.filter(student=>student.id == id);
-    this.editStudent = student
+  //MOSTRAR DATOS DEL ESTUDIANTE EN FORM
+  public onEdit(student: any, id:number){
+    this.studentId = id
+    this.isEditing = !this.isEditing
+    this.studentsForm.setValue(student)
   }
 
-  onEdit():void{
-    this.isEdited = !this.isEdited
+  //ACTUALIZAR DATOS DEL ESTUDIANTE
+  public update() {
+    this.studentsList[this.studentId] = this.studentsForm.value
+    this.isEditing = !this.isEditing
+    this.studentsForm.reset();
   }
 
+ 
 }
