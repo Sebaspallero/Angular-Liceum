@@ -1,29 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+
+export interface student{
+  name: string,
+  lastName: string,
+  email: string,
+  gender: string,
+  course: string,
+  id: number
+}
+
 @Component({
   selector: 'app-students',
   templateUrl: './students.component.html',
   styleUrls: ['./students.component.css']
 })
+
 export class StudentsComponent {
 
-  studentsList: any[] = [
+  studentsList: student[] = [
     {
-      name:'sebastian',
-      lastName:'pallero',
+      name:'Sebastian',
+      lastName:'Pallero',
       email:'sebastian@emalil.com',
       gender:'M',
       course:'Angular',
-      id: 1
-    },
-    {
-      name:'Maria',
-      lastName:'Perez',
-      email:'maria@emalil.com',
-      gender:'F',
-      course:'React',
-      id: 2
+      id: Date.now()
     }
   ];
 
@@ -76,6 +79,8 @@ export class StudentsComponent {
     })
   }
 
+  //AGREGAR ESTUDIANTE
+
   onSubmit():void{
     if(this.studentsForm.valid){
       this.studentsList.push({...this.studentsForm.value, id: Date.now()});
@@ -86,6 +91,8 @@ export class StudentsComponent {
     }
     
   };
+
+  //ELIMINAR ESTUDIANTE
 
   public isDeleted = false;
 
@@ -99,23 +106,28 @@ export class StudentsComponent {
     }, 500);
   };
 
-
-  studentId: any;
-  isEditing = false;
-
   //MOSTRAR DATOS DEL ESTUDIANTE EN FORM
-  public onEdit(student: any, id:number){
-    this.studentId = id
-    this.isEditing = !this.isEditing
+  studentIndex!: number;
+  isEditing: boolean | undefined;
+  studentId: number | undefined;
+
+  public onEdit(student: any, index:any){
+    this.studentIndex = index
+    this.studentId = student.id
+    this.isEditing = true
     this.studentsForm.setValue(student)
+    
   }
 
   //ACTUALIZAR DATOS DEL ESTUDIANTE
   public update() {
-    this.studentsList[this.studentId] = this.studentsForm.value
-    this.isEditing = !this.isEditing
-    this.studentsForm.reset();
+    if(this.studentsForm.valid){
+      this.studentsList[this.studentIndex] = {...this.studentsForm.value, id: this.studentId}
+      this.isEditing = false;
+      this.studentsForm.reset();
+    }
+    else{
+      this.studentsForm.markAllAsTouched();
+    }
   }
-
- 
 }

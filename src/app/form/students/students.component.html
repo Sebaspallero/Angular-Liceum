@@ -70,21 +70,23 @@
 </form>
 
 
-<h3 class="section-title">Estudiantes</h3>
+<h3 class="section-title" [appFontSize]="1.2">Estudiantes</h3>
 <div class="students-list-box">
-    <div *ngFor="let student of studentsList" class="students-box">
-        <div class="edit-box">
-            <img *ngIf="student.gender == 'M'" src="../../../assets/profile.png" class="profile-pic" />
-            <img *ngIf="student.gender == 'F'" src="../../../assets/profilewoman.png" class="profile-pic" />
-           <div class="icons-box">
-            <mat-icon (click)="onEdit(student, student.id)" class="edit-icon material-icons-outlined">edit</mat-icon>
-            <div (click)="onDelete(student.id)" class="delete">x</div>     
-           </div>
+    <ng-container *ngFor="let student of studentsList; index as i">
+        <div class="students-box">
+            <div class="edit-box">
+                <img *ngIf="student.gender == 'M'" src="../../../assets/profile.png" class="profile-pic" />
+                <img *ngIf="student.gender == 'F'" src="../../../assets/profilewoman.png" class="profile-pic" />
+               <div class="icons-box">
+                <mat-icon (click)="onEdit(student, i)" class="edit-icon material-icons-outlined">edit</mat-icon>
+                <div (click)="onDelete(student.id)" class="delete">x</div>     
+               </div>
+            </div>
+            <p class="student-text">Nombre: <span [ngClass]="student.gender == 'F' ? 'female-text' : 'male-text'">{{student | fullName}}</span></p>
+            <p class="student-text">Email: {{student.email}}</p>
+            <p class="student-text">Curso: <span>{{student.course}}</span></p>
         </div>
-        <p class="student-text">Nombre: <span [ngClass]="student.gender == 'F' ? 'female-text' : 'male-text'">{{student.name + " " + student.lastName | titlecase}}</span></p>
-        <p class="student-text">Email: {{student.email}}</p>
-        <p class="student-text">Curso: <span>{{student.course}}</span></p>
-    </div> 
+    </ng-container>
 </div>
 
 
