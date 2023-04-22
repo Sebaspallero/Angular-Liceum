@@ -1,4 +1,7 @@
+import { Time } from '@angular/common';
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { TimeService } from 'src/app/service/time.service';
 
 @Component({
   selector: 'app-header',
@@ -7,4 +10,9 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
 
+  currentTime$: Observable<string>;
+
+  constructor(private timeService: TimeService){
+    this.currentTime$ = this.timeService.clock
+  }
 }
