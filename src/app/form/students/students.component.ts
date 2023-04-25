@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
+import { StudentsService } from 'src/app/service/students.service';
 
-export interface student{
+export interface Students{
   name: string,
   lastName: string,
   email: string,
@@ -16,18 +19,36 @@ export interface student{
   styleUrls: ['./students.component.css']
 })
 
-export class StudentsComponent {
+export class StudentsComponent implements OnDestroy {
 
-  studentsList: student[] = [
-    {
-      name:'Sebastian',
-      lastName:'Pallero',
-      email:'sebastian@emalil.com',
-      gender:'M',
-      course:'Angular',
-      id: Date.now()
-    }
-  ];
+  studentsList: Students[] = [];
+  private destroyed$ = new Subject() 
+
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private studentsService: StudentsService
+
+  )
+  {
+    this.studentsForm = new FormGroup({
+      name: this.nameControl,
+      lastName: this.lastNameControl,
+      email: this.emailControl,
+      gender: this.genderControl,
+      course: this.courseControl
+    })
+
+    this.studentsService.getStudents()
+    .pipe(takeUntil(this.destroyed$))
+      .subscribe((students)=> {
+        this.studentsList = students
+      })
+  }
+
+   ngOnDestroy(): void {
+    this.destroyed$.next(true)
+  };
 
   studentsForm: FormGroup;
 
@@ -67,16 +88,6 @@ export class StudentsComponent {
       Validators.required,
     ]
   )
-
-  constructor(){
-    this.studentsForm = new FormGroup({
-      name: this.nameControl,
-      lastName: this.lastNameControl,
-      email: this.emailControl,
-      gender: this.genderControl,
-      course: this.courseControl
-    })
-  }
 
   //AGREGAR ESTUDIANTE
 
@@ -128,5 +139,13 @@ export class StudentsComponent {
     else{
       this.studentsForm.markAllAsTouched();
     }
+  }
+
+  //NAVEGAR AL DETALLE DEL ESTUDIANTE
+
+  navigateToDetail(studentId: number):void{
+    this.router.navigate([studentId],{
+      relativeTo: this.activatedRoute
+    })
   }
 }

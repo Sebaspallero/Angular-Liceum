@@ -1,4 +1,3 @@
-import { Time } from '@angular/common';
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TimeService } from 'src/app/service/time.service';

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { generalLinks, settingsLinks } from './nav-items';
+
 
 @Component({
   selector: 'app-sidebar',
@@ -7,4 +9,7 @@ import { Component } from '@angular/core';
 })
 export class SidebarComponent {
 
+  generalLinks = generalLinks;
+  settingsLinks = settingsLinks;
+  
 }

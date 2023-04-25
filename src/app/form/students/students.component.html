@@ -79,7 +79,9 @@
                 <img *ngIf="student.gender == 'F'" src="../../../assets/profilewoman.png" class="profile-pic" />
                <div class="icons-box">
                 <mat-icon (click)="onEdit(student, i)" class="edit-icon material-icons-outlined">edit</mat-icon>
-                <div (click)="onDelete(student.id)" class="delete">x</div>     
+                <mat-icon (click)="navigateToDetail(student.id)" class="edit-icon material-icons-outlined">visibility</mat-icon>  
+                <mat-icon (click)="onDelete(student.id)" class="delete material-icons-outlined">close</mat-icon>   
+                
                </div>
             </div>
             <p class="student-text">Nombre: <span [ngClass]="student.gender == 'F' ? 'female-text' : 'male-text'">{{student | fullName}}</span></p>

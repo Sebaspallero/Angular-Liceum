@@ -5,34 +5,14 @@
     </div>
     <div class="sidebar-list-box">
         <h3 class="list-section-title">General</h3>
-        <div class="list-item-box">
-            <mat-icon class="list-item-icon material-icons-outlined">dashboard</mat-icon>
-            <p class="list-item-text">Dashboard</p>
-        </div>
-        <div class="list-item-box">
-            <mat-icon class="list-item-icon material-icons-outlined">assignment</mat-icon>
-            <p class="list-item-text">Clases</p>
-        </div>
-        <div class="list-item-box">
-            <mat-icon class="list-item-icon material-icons-outlined">badge</mat-icon>
-            <p class="list-item-text">Profesores</p>
-        </div>
-        <div class="list-item-box">
-            <mat-icon class="list-item-icon material-icons-outlined">school</mat-icon>
-            <p class="list-item-text">Alumnos</p>
-        </div>
+        <a class="list-item-box" *ngFor="let link of generalLinks" [routerLink]="link.path">
+            <mat-icon class="list-item-icon material-icons-outlined">{{link.icon}}</mat-icon>
+            <p class="list-item-text">{{link.title}}</p>
+        </a>
         <h3 class="list-section-title">Settings</h3>
-        <div class="list-item-box">
-            <mat-icon class="list-item-icon material-icons-outlined">settings</mat-icon>
-            <p class="list-item-text">Ajustes</p>
-        </div>
-        <div class="list-item-box">
-            <mat-icon class="list-item-icon material-icons-outlined">account_circle</mat-icon>
-            <p class="list-item-text">Cuenta</p>
-        </div>
-        <div class="list-item-box">
-            <mat-icon class="list-item-icon material-icons-outlined">logout</mat-icon>
-            <p class="list-item-text">Log Out</p>
-        </div>
+        <a class="list-item-box" *ngFor="let link of settingsLinks">
+            <mat-icon class="list-item-icon material-icons-outlined">{{link.icon}}</mat-icon>
+            <p class="list-item-text">{{link.title}}</p>
+        </a>
     </div>
 </aside>
