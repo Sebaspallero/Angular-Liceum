@@ -1,16 +1,20 @@
-import {  NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { StudentsComponent } from './form/students/students.component';
-import { PageWrapperComponent } from './components/page-wrapper/page-wrapper.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import StudentDetailComponent from './components/student-detail/student-detail.component';
+import { StudentsComponent } from './dashboard/pages/students/students.component';
+import { HomeComponent } from './dashboard/pages/home/home.component';
+import StudentDetailComponent from './dashboard/pages/students/student-detail/student-detail.component';
+import { ClassesComponent } from './dashboard/pages/classes/classes.component';
+import { AuthComponent } from './auth/auth.component';
+import { LoginComponent } from './auth/pages/login/login.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ClassesDetailComponent } from './dashboard/pages/classes/classes-detail/classes-detail.component';
 
 
 
 const routes: Routes = [
   {
     path: 'dashboard',
-    component: PageWrapperComponent,
+    component: DashboardComponent,
     children: [
       {
         path: 'students',
@@ -27,7 +31,31 @@ const routes: Routes = [
       },
       {
         path: 'home',
-        component: DashboardComponent
+        component: HomeComponent
+      },
+      {
+        path: 'classes',
+        children:[
+          {
+            path: '',
+            component: ClassesComponent
+          },
+          {
+            path:':id',
+            component: ClassesDetailComponent
+          }
+        ]
+       
+      }
+    ]
+  },
+  {
+    path: 'auth',
+    component: AuthComponent,
+    children: [
+      {
+        path: 'login',
+        component: LoginComponent
       }
     ]
   },

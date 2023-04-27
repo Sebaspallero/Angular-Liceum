@@ -1,0 +1,75 @@
+<form [formGroup]="coursesForm" (ngSubmit)="onSubmit()">
+    <h3 class="msg-title">Agregar Curso</h3>
+    <label>Nombre</label>
+        <input 
+            formControlName="name" 
+            type="text" 
+            placeholder="Nombre"
+            class="form-input"
+            [class.is-invalid]="nameControl.invalid && nameControl.touched"
+        />
+        <ng-container *ngIf="nameControl.touched">
+            <app-form-error-helpers [formErrors]="nameControl.errors"></app-form-error-helpers>
+        </ng-container>
+
+            <label>Fecha de Inicio</label>
+            <div class="date-input">
+                <input 
+                matInput [matDatepicker]="picker_start" 
+                class="form-input"
+                formControlName="startDate"
+                placeholder="dd/MM/YYYY"
+                [min]="minDate" 
+                [max]="maxDate"
+                [class.is-invalid]="startDateControl.invalid && startDateControl.touched"
+                 />
+                <mat-datepicker-toggle matIconSuffix [for]="picker_start"></mat-datepicker-toggle>
+                <mat-datepicker #picker_start></mat-datepicker>
+            </div>
+            <ng-container *ngIf="startDateControl.touched">
+                <app-form-error-helpers [formErrors]="startDateControl.errors"></app-form-error-helpers>
+            </ng-container>
+
+            <label>Fecha de Finalización</label>
+            <div class="date-input">
+                <input 
+                matInput [matDatepicker]="picker_end" 
+                class="form-input"
+                formControlName="endDate"
+                placeholder="dd/MM/YYYY"
+                [min]="minDate" 
+                [max]="maxDate"
+                [class.is-invalid]="endDateControl.invalid && endDateControl.touched"
+                 />
+                <mat-datepicker-toggle matIconSuffix [for]="picker_end"></mat-datepicker-toggle>
+                <mat-datepicker #picker_end></mat-datepicker>
+            </div>
+            <ng-container *ngIf="endDateControl.touched">
+                <app-form-error-helpers [formErrors]="endDateControl.errors"></app-form-error-helpers>
+            </ng-container>
+
+    <button *ngIf="!isEditing" type="submit">Enviar</button>
+    <button *ngIf="isEditing" (click)="update()">Guardar Cambios</button>
+</form>
+
+
+<h3 class="section-title" [appFontSize]="1.2">Cursos</h3>
+<div class="students-list-box">
+    <ng-container *ngFor="let course of coursesList; index as i">
+        <div class="students-box">
+            <div class="edit-box">
+                <!-- <img src="../../../assets/profilewoman.png" class="profile-pic" /> -->
+               <div class="icons-box">
+                <mat-icon (click)="onEdit(course, i)"  class="edit-icon material-icons-outlined">edit</mat-icon>
+                <mat-icon (click)="navigateToDetail(course.id)" class="edit-icon material-icons-outlined">visibility</mat-icon>  
+                <mat-icon (click)="onDelete(course.id)" class="delete material-icons-outlined">close</mat-icon>   
+                
+               </div>
+            </div>
+            <p class="student-text">Nombre: <span>{{course.name}}</span></p>
+            <p class="student-text">Fecha de Inicio: {{course.startDate | date: 'dd/MM/yyyy'}}</p>
+            <p class="student-text">Fecha de Fin: {{course.endDate | date: 'dd/MM/yyyy'}}</p>
+        </div>
+    </ng-container>
+</div>
+
