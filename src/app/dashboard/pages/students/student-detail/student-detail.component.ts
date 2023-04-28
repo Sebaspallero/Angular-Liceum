@@ -13,7 +13,7 @@ import { Students } from 'src/app/core/models/students';
 
 export default class StudentDetailComponent implements OnDestroy {
 
-  student: Students | undefined
+  student: Students | any
   private destroyed$ = new Subject() 
 
   constructor(
@@ -29,4 +29,9 @@ export default class StudentDetailComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.destroyed$.next(true)
   };
+
+  onDelete(): void{
+    delete this.student?.course
+    console.log(this.student)
+  }
 }

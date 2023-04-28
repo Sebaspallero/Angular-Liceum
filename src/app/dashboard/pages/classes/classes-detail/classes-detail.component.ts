@@ -27,4 +27,8 @@ export class ClassesDetailComponent {
   ngOnDestroy(): void {
     this.destroyed$.next(true)
   };
+
+  onDelete(): void{
+    delete this.course?.students
+  }
 }

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import StudentDetailComponent from './student-detail.component';
+import { MatIconModule } from '@angular/material/icon';
+import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 
 
 
@@ -9,7 +11,9 @@ import StudentDetailComponent from './student-detail.component';
     StudentDetailComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MatIconModule,
+    PipesModule,
   ],
   exports:[
     StudentDetailComponent

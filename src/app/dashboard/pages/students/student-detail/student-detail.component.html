@@ -1,1 +1,10 @@
-<p>{{student?.name}}</p>
+<div class="student-detail-box">
+    <p>Nombre Completo: {{student | fullName}}</p>
+    <p>Email: {{student?.email}}</p>
+    <p>ID: {{student?.id}} </p>
+    <p>Cursos:</p>
+    <div *ngIf="student?.course" class="info-box">
+        <p>{{student?.course}}</p>
+        <mat-icon (click)="onDelete()" class="delete material-icons-outlined">close</mat-icon>  
+    </div>
+</div>

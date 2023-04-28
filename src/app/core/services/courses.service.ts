@@ -4,26 +4,28 @@ import { Course } from '../models/course';
 
 
 
-const CoursesMock: Course[] = [
+let CoursesMock: Course[] = [
   {
     id: 1,
     name: 'Angular',
     startDate: new Date(),
-    endDate: new Date()
-
+    endDate: new Date(),
+    students: { name:'Sebastian', lastName:'Pallero',}
   },
   {
     id: 2,
     name: 'React',
     startDate: new Date(),
-    endDate: new Date()
+    endDate: new Date(),
+    students: { name:'Sebastian', lastName:'Pallero',}
 
   },
   {
     id: 3,
     name: 'Vue',
     startDate: new Date(),
-    endDate: new Date()
+    endDate: new Date(),
+    students: { name:'Sebastian', lastName:'Pallero',}
   },
 ]
 

@@ -71,7 +71,7 @@ button:hover{
     margin-bottom: 1em;
 }
 
-.students-list-box{
+.course-list-box{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

@@ -76,6 +76,7 @@ button:hover{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    margin-bottom: 4em;
 }
 
  .students-box{

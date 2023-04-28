@@ -8,6 +8,7 @@ import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { DirectivesModule } from 'src/app/shared/directives/directives.module';
 import { MatNativeDateModule } from '@angular/material/core';
+import { ClassesDetailModule } from './classes-detail/classes-detail.module';
 
 
 
@@ -24,7 +25,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     DirectivesModule,
     MatDatepickerModule,
     MatNativeDateModule,
-  
+    ClassesDetailModule
   ],
   exports:[
     ClassesComponent

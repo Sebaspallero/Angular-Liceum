@@ -106,7 +106,6 @@ export class ClassesComponent implements OnInit, OnDestroy{
     this.courseId = course.id
     this.isEditing = true
     this.coursesForm.setValue(course)
-    console.log(this.coursesForm)
   }
 
   //ACTUALIZAR DATOS DEL ESTUDIANTE
