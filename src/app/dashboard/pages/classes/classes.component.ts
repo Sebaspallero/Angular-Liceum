@@ -105,14 +105,17 @@ export class ClassesComponent implements OnInit, OnDestroy{
     this.courseIndex = index
     this.courseId = course.id
     this.isEditing = true
-    this.coursesForm.setValue(course)
+    this.nameControl.setValue(course.name)
+    this.startDateControl.setValue(course.startDate)
+    this.endDateControl.setValue(course.endDate)
+    
   }
 
   //ACTUALIZAR DATOS DEL ESTUDIANTE
 
    public update() {
-    if(this.coursesForm.valid){
-      this.courseId[this.courseIndex] = {...this.coursesForm.value, id: this.courseId}
+    if(this.coursesForm.valid && this.coursesList){
+      this.coursesList[this.courseIndex] = {...this.coursesForm.value, id: this.courseId}
       this.isEditing = false;
       this.coursesForm.reset();
     }
