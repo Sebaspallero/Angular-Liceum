@@ -115,7 +115,7 @@ export class ClassesComponent implements OnInit, OnDestroy{
 
    public update() {
     if(this.coursesForm.valid && this.coursesList){
-      this.coursesList[this.courseIndex] = {...this.coursesForm.value, id: this.courseId}
+      this.coursesList[this.courseIndex] = {...this.coursesForm.value, id: this.courseId,  students: { name:'Sebastian', lastName:'Pallero',}}
       this.isEditing = false;
       this.coursesForm.reset();
     }
