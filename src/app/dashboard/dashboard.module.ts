@@ -7,12 +7,14 @@ import { SidebarModule } from './components/sidebar/sidebar.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { HomeModule } from './pages/home/home.module';
 import { StudentsModule } from './pages/students/students.module';
+import { InscriptionModule } from './pages/inscription/inscription.module';
+
 
 
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    DashboardComponent,
   ],
   imports: [
     CommonModule,
@@ -22,6 +24,7 @@ import { StudentsModule } from './pages/students/students.module';
     StudentsModule,
     HeaderModule,
     SidebarModule,
+    InscriptionModule
   ],
   exports:[
     DashboardComponent

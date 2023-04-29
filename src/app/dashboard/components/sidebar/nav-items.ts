@@ -25,14 +25,19 @@ export const generalLinks: NavItem[] = [
         title: 'Alumnos',
         icon: 'school'
     },
+    {
+        path: 'inscriptions',
+        title: 'Inscripciones',
+        icon: 'edit_document'
+    },
 ];
 
 export const settingsLinks: NavItem[] =[
-    {
+ /*    {
         path: 'settings',
         title: 'Ajustes',
         icon: 'settings'
-    },
+    }, */
     {
         path: 'account',
         title: 'Cuenta',

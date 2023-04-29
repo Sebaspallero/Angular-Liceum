@@ -1,0 +1,67 @@
+<form [formGroup]="inscriptionForm" (ngSubmit)="onSubmit()">
+    <h3 class="msg-title">Anotar Estudiante</h3>
+    <label>Nombre del Estudiante</label>
+        <input 
+            formControlName="name" 
+            type="text" 
+            placeholder="Nombre"
+            class="form-input"
+            [class.is-invalid]="nameControl.invalid && nameControl.touched"
+        />
+        <ng-container *ngIf="nameControl.touched">
+            <app-form-error-helpers [formErrors]="nameControl.errors"></app-form-error-helpers>
+        </ng-container>
+
+        <label>Apellido del Estudiante</label>
+        <input 
+            formControlName="lastName" 
+            type="text" 
+            placeholder="Apellido"
+            class="form-input"
+            [class.is-invalid]="lastNameControl.invalid && lastNameControl.touched"
+        />
+        <ng-container *ngIf="lastNameControl.touched">
+            <app-form-error-helpers [formErrors]="lastNameControl.errors"></app-form-error-helpers>
+        </ng-container>
+
+        <label>Curso</label>
+        <select 
+            name="curso"
+            formControlName="course"
+            [class.is-invalid]="courseControl.invalid && courseControl.touched"
+            >
+            <option value="React">React</option>
+            <option value="Angular">Angular</option>
+            <option value="Vue">Vue</option>
+            <option value="UX">UX</option>
+            <option value="UI">UI</option>
+          </select>
+        <ng-container *ngIf="courseControl.touched">
+            <app-form-error-helpers [formErrors]="courseControl.errors"></app-form-error-helpers>
+        </ng-container>
+
+    <button *ngIf="!isEditing" type="submit">Enviar</button>
+    <button *ngIf="isEditing" (click)="update()">Guardar Cambios</button>
+</form>
+
+
+<h3 class="section-title" [appFontSize]="1.2">Estudiantes</h3>
+<div class="inscription-list-box">
+    <ng-container *ngFor="let inscription of inscriptionList; index as i">
+        <div class="students-box">
+            <div class="edit-box">
+                <!-- <img *ngIf="student.gender == 'M'" src="../../../assets/profile.png" class="profile-pic" />
+                <img *ngIf="student.gender == 'F'" src="../../../assets/profilewoman.png" class="profile-pic" /> -->
+               <div class="icons-box">
+                <mat-icon (click)="onEdit(inscription, i)" class="edit-icon material-icons-outlined">edit</mat-icon>
+                <mat-icon (click)="navigateToDetail(inscription.id)" class="edit-icon material-icons-outlined">visibility</mat-icon>  
+                <mat-icon (click)="onDelete(inscription.id)" class="delete material-icons-outlined">close</mat-icon>   
+                
+               </div>
+            </div>
+            <p class="student-text">Nombre: {{inscription.name}} {{inscription.lastName}}</p>
+            <p class="student-text">Curso: {{inscription.course}}</p>
+            <!-- <p class="student-text">Curso: <span>{{student.course}}</span></p> -->
+        </div>
+    </ng-container>
+</div>

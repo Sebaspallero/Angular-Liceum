@@ -8,6 +8,8 @@ import { AuthComponent } from './auth/auth.component';
 import { LoginComponent } from './auth/pages/login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ClassesDetailComponent } from './dashboard/pages/classes/classes-detail/classes-detail.component';
+import { InscriptionComponent } from './dashboard/pages/inscription/inscription.component';
+import { InscriptionDetailComponent } from './dashboard/pages/inscription/inscription-detail/inscription-detail.component';
 
 
 
@@ -43,6 +45,20 @@ const routes: Routes = [
           {
             path:':id',
             component: ClassesDetailComponent
+          }
+        ]
+       
+      },
+      {
+        path: 'inscriptions',
+        children:[
+          {
+            path: '',
+            component: InscriptionComponent
+          },
+          {
+            path:':id',
+            component: InscriptionDetailComponent
           }
         ]
        
