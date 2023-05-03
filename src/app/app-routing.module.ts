@@ -1,69 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { StudentsComponent } from './dashboard/pages/students/students.component';
-import { HomeComponent } from './dashboard/pages/home/home.component';
-import StudentDetailComponent from './dashboard/pages/students/student-detail/student-detail.component';
-import { ClassesComponent } from './dashboard/pages/classes/classes.component';
 import { AuthComponent } from './auth/auth.component';
 import { LoginComponent } from './auth/pages/login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { HomeComponent } from './dashboard/pages/home/home.component';
+import { StudentsComponent } from './dashboard/pages/students/students.component';
+import StudentDetailComponent from './dashboard/pages/students/student-detail/student-detail.component';
+import { ClassesComponent } from './dashboard/pages/classes/classes.component';
 import { ClassesDetailComponent } from './dashboard/pages/classes/classes-detail/classes-detail.component';
 import { InscriptionComponent } from './dashboard/pages/inscription/inscription.component';
 import { InscriptionDetailComponent } from './dashboard/pages/inscription/inscription-detail/inscription-detail.component';
-
 
 
 const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    children: [
-      {
-        path: 'students',
-        children:[
-          {
-            path: '',
-            component: StudentsComponent
-          },
-          {
-            path: ':id',
-            component: StudentDetailComponent
-          }
-        ]
-      },
-      {
-        path: 'home',
-        component: HomeComponent
-      },
-      {
-        path: 'classes',
-        children:[
-          {
-            path: '',
-            component: ClassesComponent
-          },
-          {
-            path:':id',
-            component: ClassesDetailComponent
-          }
-        ]
-       
-      },
-      {
-        path: 'inscriptions',
-        children:[
-          {
-            path: '',
-            component: InscriptionComponent
-          },
-          {
-            path:':id',
-            component: InscriptionDetailComponent
-          }
-        ]
-       
-      }
-    ]
+    loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule)
   },
   {
     path: 'auth',
@@ -77,7 +30,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'dashboard/home'
+    redirectTo: 'dashboard'
   }
 ]
 
