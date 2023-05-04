@@ -1,27 +1,67 @@
 @import "https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round";
 
 .sidebar{
+    display: flex;
+    flex-direction: column;
     background-color: var(--blue-clr);
     border-top-right-radius: 10px;
+    padding: 0em 0em 0em .5em;
 }
 
 .sidebar-title-box{
+    margin: 1.5em 0em 1em 1em;
+    position: relative;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: baseline;
     gap: .5em;
-    padding: 1em 0em;
-    margin-left: .5em;
-
+    width: fit-content;
+    cursor: pointer;
 }
 
-.sidebar-logo{
-    color:var(--white-clr)
+.sidebar-title-box::after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 3px;
+    border-radius: 20px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--white-clr);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
 }
+
+.sidebar-title-box:hover:after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
 
 .sidebar-title{
     color:var(--white-clr);
     font-size: var(--fs-title);
+}
+
+.dot-1{
+    width: 10px;
+    height:  10px;
+    border-radius: 50%;
+    background-color: var(--accent-clr);
+}
+
+.dot-2{
+    width: 10px;
+    height:  10px;
+    border-radius: 50%;
+    background-color: var(--dark-blue-clr);
+}
+
+.dot-3{
+    width: 10px;
+    height:  10px;
+    border-radius: 50%;
+    background-color: var(--light-blue-clr);
 }
 
 .sidebar-list-box{

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { Student } from '../models/students';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 
  export interface loginFormValue {
@@ -17,7 +18,8 @@ export class AuthService {
   private authUser$ = new BehaviorSubject<Student | null>(null)
 
   constructor(
-    private router: Router
+    private router: Router,
+    private httpClient: HttpClient
   ) { }
 
   getVerifiedStudent(): Observable<Student | null> {
@@ -25,33 +27,47 @@ export class AuthService {
   }
 
   login(formValue: loginFormValue): void{
-
-    const user = {
-      id: 1,
-      name: 'Sebastián',
-      lastName: 'Pallero',
-      gender: 'M',
-      role: 'Admin',
-      email: formValue.email
-    }
-    localStorage.setItem('auth-user', JSON.stringify(user));
-    this.authUser$.next(user);
-    this.router.navigate(['dashboard/home'])
+    this.httpClient.get<[Student]>(`http://localhost:3000/users`,
+          {
+            params:{
+              ...formValue
+            }
+          }
+        ).subscribe({
+          next: (users) => {
+            const authUser = users[0];
+            if(authUser){
+              localStorage.setItem('token', authUser.token)
+              this.authUser$.next(authUser);
+              this.router.navigate(['dashboard', 'home'])
+            }
+            else{
+              alert('Usuario y/o contraseña incorrectos')
+            }
+          }
+        })
   };
 
   logOut(): void {
-    localStorage.removeItem('auth-user');
+    localStorage.removeItem('token');
     this.authUser$.next(null);
     this.router.navigate(['auth'])
   }
 
-  verifyStorage(): void {
-    const storageValue = localStorage.getItem('auth-user');
-    if(storageValue){
-      const user = JSON.parse(storageValue);
-      this.authUser$.next(user)
-    }else{
-      return
-    }
-  }
+  verifyToken(): Observable<boolean> {
+
+    const token = localStorage.getItem('token');
+
+    return this.httpClient.get<[Student]>(`http://localhost:3000/users?token=${token}`)
+    .pipe(
+      map((users)=> {
+        const authUser = users[0];
+        if(authUser){
+          localStorage.setItem('token', authUser.token)
+          this.authUser$.next(authUser);
+        }
+        return !!authUser
+      })
+    )
+  };
 }

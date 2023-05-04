@@ -20,6 +20,10 @@ export class SidebarComponent {
     this.authService.logOut()
   }
 
+  navigateToHome(): void {
+    this.router.navigate(['dashboard', 'home'])
+  }
+
   generalLinks = generalLinks;
   settingsLinks = settingsLinks;
   

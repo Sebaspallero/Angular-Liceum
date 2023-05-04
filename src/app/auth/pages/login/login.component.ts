@@ -11,7 +11,7 @@ export class LoginComponent {
 
 
   emailControl = new FormControl(
-    'sebastian@gmail.com',
+    'sebastian@email.com',
     [
       Validators.required,
       Validators.email

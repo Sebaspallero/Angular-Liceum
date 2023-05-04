@@ -1,0 +1,26 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Sebastián",
+      "lastName": "Pallero",
+      "email": "sebastian@email.com",
+      "gender": "M",
+      "password": "12345",
+      "token": "SKsmSCSCksnbttLBMODckns",
+      "role": "Admin",
+      "course": ""
+    },
+    {
+      "name": "María",
+      "lastName": "Fernandez",
+      "email": "maria@email.com",
+      "gender": "F",
+      "password": "asdf",
+      "token": "SKsmSCSCkscjdyemdsLBMODckns",
+      "role": "user",
+      "course": "",
+      "id": 2
+    }
+  ]
+}
