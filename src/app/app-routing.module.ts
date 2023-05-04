@@ -1,36 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from './auth/auth.component';
-import { LoginComponent } from './auth/pages/login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { HomeComponent } from './dashboard/pages/home/home.component';
-import { StudentsComponent } from './dashboard/pages/students/students.component';
-import StudentDetailComponent from './dashboard/pages/students/student-detail/student-detail.component';
-import { ClassesComponent } from './dashboard/pages/classes/classes.component';
-import { ClassesDetailComponent } from './dashboard/pages/classes/classes-detail/classes-detail.component';
-import { InscriptionComponent } from './dashboard/pages/inscription/inscription.component';
-import { InscriptionDetailComponent } from './dashboard/pages/inscription/inscription-detail/inscription-detail.component';
-
+import { AuthGuard } from './auth/guards/auth.guard';
+import { LoginGuard } from './auth/guards/login.guard';
 
 const routes: Routes = [
   {
     path: 'dashboard',
+    canActivate:[AuthGuard],
     component: DashboardComponent,
-    loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule)
+    loadChildren: () => import("./dashboard/dashboard.module").then((m) => m.DashboardModule), 
   },
   {
     path: 'auth',
+    canActivate:[LoginGuard],
     component: AuthComponent,
-    children: [
-      {
-        path: 'login',
-        component: LoginComponent
-      }
-    ]
+    loadChildren: () => import ('./auth/auth.module').then((m) => m.AuthModule)
   },
   {
     path: '**',
-    redirectTo: 'dashboard'
+    redirectTo: 'dashboard/home',
   }
 ]
 

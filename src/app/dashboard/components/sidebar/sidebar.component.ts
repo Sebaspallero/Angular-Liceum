@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { generalLinks, settingsLinks } from './nav-items';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 
 @Component({
@@ -11,11 +12,12 @@ import { Router } from '@angular/router';
 export class SidebarComponent {
   
   constructor(
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ){}
 
   logOut(): void {
-    this.router.navigate(['auth', 'login'])
+    this.authService.logOut()
   }
 
   generalLinks = generalLinks;

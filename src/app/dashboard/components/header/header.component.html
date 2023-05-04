@@ -1,13 +1,13 @@
 <header class="header-box">
     <div>
-        <h2 class="header-title">User Dashboard</h2>
+        <h2 class="header-title">{{(authUser$ | async)?.name}} Dashboard</h2>
     </div>
     <div class="userinfo-box">
         <img src="../../../assets/profile.png" class="header-profile-pic">
         <div class="userstatus-box">
-            <p class="header-username">User Name</p>
-            <p class="header-userstatus">User Status</p>
-            <p class="header-userstatus">{{currentTime$ | async}}</p>
+            <p class="header-username">{{(authUser$ | async)?.name}}</p>
+            <p class="header-userstatus">{{(authUser$ | async)?.role}}</p>
+            <!-- <p class="header-userstatus">{{currentTime$ | async}}</p> -->
         </div>
     </div>
 </header>

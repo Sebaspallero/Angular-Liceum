@@ -9,7 +9,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { DirectivesModule } from 'src/app/shared/directives/directives.module';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ClassesDetailModule } from './classes-detail/classes-detail.module';
-
+import { ClassesRoutingModule } from './classes-routing.module';
 
 
 @NgModule({
@@ -25,7 +25,9 @@ import { ClassesDetailModule } from './classes-detail/classes-detail.module';
     DirectivesModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    ClassesDetailModule
+    MatIconModule,
+    ClassesDetailModule,
+    ClassesRoutingModule
   ],
   exports:[
     ClassesComponent

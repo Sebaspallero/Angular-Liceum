@@ -86,6 +86,7 @@
             </div>
             <p class="student-text">Nombre: <span [ngClass]="student.gender == 'F' ? 'female-text' : 'male-text'">{{student | fullName}}</span></p>
             <p class="student-text">Email: {{student.email}}</p>
+            <p class="student-text">Status: {{student.role}}</p>  
             <!-- <p class="student-text">Curso: <span>{{student.course}}</span></p> -->
         </div>
     </ng-container>

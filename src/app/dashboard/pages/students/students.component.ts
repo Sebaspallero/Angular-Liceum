@@ -2,7 +2,7 @@ import { Component, OnDestroy} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { Students } from 'src/app/core/models/students';
+import { Student } from 'src/app/core/models/students';
 import { StudentsService } from 'src/app/core/services/students.service';
 
 
@@ -14,7 +14,7 @@ import { StudentsService } from 'src/app/core/services/students.service';
 
 export class StudentsComponent implements OnDestroy {
 
-  studentsList: Students[] = [];
+  studentsList: Student[] = [];
   private destroyed$ = new Subject() 
 
   constructor(
@@ -86,7 +86,7 @@ export class StudentsComponent implements OnDestroy {
 
   onSubmit():void{
     if(this.studentsForm.valid){
-      this.studentsList.push({...this.studentsForm.value, id: Date.now()});
+      this.studentsList.push({...this.studentsForm.value, id: Date.now(), role: 'student'});
       this.studentsForm.reset();
     }
     else{

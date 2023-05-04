@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 import { DirectivesModule } from 'src/app/shared/directives/directives.module';
 import { InscriptionDetailModule } from './inscription-detail/inscription-detail.module';
+import { InscriptionsRoutingModule } from './inscriptions-routing.module';
 
 
 
@@ -21,7 +22,8 @@ import { InscriptionDetailModule } from './inscription-detail/inscription-detail
     MatIconModule,
     PipesModule,
     DirectivesModule,
-    InscriptionDetailModule
+    InscriptionDetailModule,
+    InscriptionsRoutingModule
   ],
   exports:[
     InscriptionComponent

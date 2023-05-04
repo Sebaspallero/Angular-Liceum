@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 import { DirectivesModule } from 'src/app/shared/directives/directives.module';
 import { StudentDetailModule } from './student-detail/student-detail.module';
+import { StudentsRoutingModule } from './students-routing.module';
 
 
 
@@ -21,7 +22,8 @@ import { StudentDetailModule } from './student-detail/student-detail.module';
     MatIconModule,
     PipesModule,
     DirectivesModule,
-    StudentDetailModule
+    StudentDetailModule,
+    StudentsRoutingModule
   ],
   exports:[
     StudentsComponent

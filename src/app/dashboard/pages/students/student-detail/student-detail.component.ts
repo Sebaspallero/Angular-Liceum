@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { StudentsService } from 'src/app/core/services/students.service';
 import { Subject, takeUntil } from 'rxjs';
-import { Students } from 'src/app/core/models/students';
+import { Student } from 'src/app/core/models/students';
 
 @Component({
   selector: 'app-student-detail',
@@ -13,7 +13,7 @@ import { Students } from 'src/app/core/models/students';
 
 export default class StudentDetailComponent implements OnDestroy {
 
-  student: Students | any
+  student: Student | any
   private destroyed$ = new Subject() 
 
   constructor(

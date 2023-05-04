@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthComponent } from './auth.component';
 import { LoginModule } from './pages/login/login.module';
-import { AppRoutingModule } from 'src/app/app-routing.module';
+import { RouterModule } from '@angular/router';
+import { LoginComponent } from './pages/login/login.component';
+
 
 
 
@@ -14,7 +16,16 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
   imports: [
     CommonModule,
     LoginModule,
-    AppRoutingModule
+    RouterModule.forChild([
+      {
+        path: 'login',
+        component: LoginComponent
+      },
+      {
+        path: '**',
+        redirectTo: 'login'
+      }
+    ])
   ],
   exports:[
     AuthComponent

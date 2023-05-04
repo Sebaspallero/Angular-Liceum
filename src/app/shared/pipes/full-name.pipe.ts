@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Students } from 'src/app/core/models/students';
+import { Student } from 'src/app/core/models/students';
 
 
 @Pipe({
@@ -7,7 +7,7 @@ import { Students } from 'src/app/core/models/students';
 })
 export class FullNamePipe implements PipeTransform {
 
-  transform(value: Students, ...args: unknown[]): unknown {
+  transform(value: Student, ...args: unknown[]): unknown {
     const fullName = `${value.name} ${value.lastName}`.toLowerCase();
     const arr = fullName.split(" ");
     for (var i = 0; i < arr.length; i++) {
