@@ -1,8 +1,10 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { Inscription } from 'src/app/core/models/inscription';
+import { Student } from 'src/app/core/models/students';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { InscriptionsService } from 'src/app/core/services/inscriptions.service';
 
 @Component({
@@ -10,15 +12,17 @@ import { InscriptionsService } from 'src/app/core/services/inscriptions.service'
   templateUrl: './inscription.component.html',
   styleUrls: ['./inscription.component.css']
 })
-export class InscriptionComponent implements OnDestroy {
+export class InscriptionComponent implements OnDestroy, OnInit {
 
+  private destroyed$ = new Subject();
+  authUser$: Observable<Student | null>;
   inscriptionList: Inscription[] = [];
-  private destroyed$ = new Subject() 
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private inscriptionService: InscriptionsService
+    private inscriptionService: InscriptionsService,
+    private authService: AuthService
 
   )
   {
@@ -27,16 +31,24 @@ export class InscriptionComponent implements OnDestroy {
       lastName: this.lastNameControl,
       course: this.courseControl
     })
+    
+    this.authUser$ = this.authService.getVerifiedStudent()
+  }
 
-    this.inscriptionService.getInscription()
-    .pipe(takeUntil(this.destroyed$))
-      .subscribe((inscription)=> {
-        this.inscriptionList = inscription
-      })
+  ngOnInit(): void {
+    this.inscriptionService.inscriptions
+      .pipe(takeUntil(this.destroyed$))
+        .subscribe({
+          next:(inscriptions) =>{
+            this.inscriptionList = inscriptions
+          }
+        })
+    this.inscriptionService.getInscriptions()
   }
 
    ngOnDestroy(): void {
-    this.destroyed$.next(true)
+    this.destroyed$.next(true);
+    this.destroyed$.complete()
   };
 
   inscriptionForm: FormGroup;
@@ -64,32 +76,36 @@ export class InscriptionComponent implements OnDestroy {
   )
 
   //AGREGAR INSCRIPCIÓN
-
   onSubmit():void{
     if(this.inscriptionForm.valid){
-      this.inscriptionList.push({...this.inscriptionForm.value, id: Date.now()});
-      console.log(this.inscriptionForm.value)
-      this.inscriptionForm.reset();
-      
+      this.inscriptionService.postInscriptionOnDb({...this.inscriptionForm.value})
+      .pipe(takeUntil(this.destroyed$))
+        .subscribe(
+          inscription => this.inscriptionList.push(inscription)
+        )
+        this.inscriptionForm.reset();
     }
     else{
       this.inscriptionForm.markAllAsTouched();
     }
-    
   };
 
-  //ELIMINAR INSCRIPCIÓN
 
-  public isDeleted = false;
+  //ELIMINAR INSCRIPCIÓN
+  selectedIndex = -1
 
   public onDelete(id: number){
-    //Animación de borrar => [class.deleted]="isDeleted == true"
-    this.isDeleted = !this.isDeleted;
-    //Borrar
+    this.selectedIndex = id
     setTimeout(() => {
-      const deletedUser = this.inscriptionList.filter(inscription => inscription.id !== id);
-      this.inscriptionList = deletedUser
-    }, 500);
+      this.inscriptionService.deleteInscriptionOnDb(id)
+        .pipe(takeUntil(this.destroyed$))
+        .subscribe({
+          next: (response) =>{
+            const deletedInscription = this.inscriptionList.filter(inscription => inscription.id !== id);
+            this.inscriptionList = deletedInscription
+          }
+         })
+    }, 1500);
   };
 
   //MOSTRAR DATOS DE LA INSCRIPCIÓN EN FORM
@@ -101,6 +117,7 @@ export class InscriptionComponent implements OnDestroy {
     this.inscriptionIndex = index
     this.inscriptionId = inscription.id
     this.isEditing = true
+
     this.nameControl.setValue(inscription.name)
     this.lastNameControl.setValue(inscription.lastName)
     this.courseControl.setValue(inscription.course)
@@ -110,17 +127,21 @@ export class InscriptionComponent implements OnDestroy {
   //ACTUALIZAR DATOS DE LA INSCRIPCIÓN
   public update() {
     if(this.inscriptionForm.valid){
-      this.inscriptionList[this.inscriptionIndex] = {...this.inscriptionForm.value, id: this.inscriptionId}
-      this.isEditing = false;
-      this.inscriptionForm.reset();
-    }
+      this.inscriptionService.updateInscriptionOnDb({...this.inscriptionForm.value, id: this.inscriptionId})
+        .pipe(takeUntil(this.destroyed$))
+        .subscribe({
+          next:(response) =>{
+            this.inscriptionList[this.inscriptionIndex] = response
+            this.isEditing = false;
+            this.inscriptionForm.reset();
+          }}) 
+      } 
     else{
       this.inscriptionForm.markAllAsTouched();
     }
-  }
-
+  } 
+  
   //NAVEGAR AL DETALLE DE LA INSCRIPCIÓN
-
   navigateToDetail(inscriptionId: number):void{
     this.router.navigate([inscriptionId],{
       relativeTo: this.activatedRoute

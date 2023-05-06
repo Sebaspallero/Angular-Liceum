@@ -6,6 +6,7 @@ import { SidebarModule } from './components/sidebar/sidebar.module';
 import { HomeModule } from './pages/home/home.module';
 import { HomeComponent } from './pages/home/home.component';
 import { RouterModule } from '@angular/router';
+import { AdminGuard } from '../auth/guards/admin.guard';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,11 @@ import { RouterModule } from '@angular/router';
       {
         path: 'inscriptions',
         loadChildren: () => import("./pages/inscription/inscription.module").then((m) => m.InscriptionModule),
+      },
+      {
+        path: 'users',
+        canActivate:[AdminGuard],
+        loadChildren: () => import("./pages/users/users.module").then((m) => m.UsersModule),
       }
     ])
   ],

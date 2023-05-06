@@ -1,4 +1,4 @@
-<form [formGroup]="coursesForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="coursesForm" >
     <h3 class="msg-title">Agregar Curso</h3>
     <label>Nombre</label>
         <input 
@@ -48,7 +48,7 @@
                 <app-form-error-helpers [formErrors]="endDateControl.errors"></app-form-error-helpers>
             </ng-container>
 
-    <button *ngIf="!isEditing" type="submit">Enviar</button>
+    <button *ngIf="!isEditing" type="submit" (click)="onSubmit()">Enviar</button>
     <button *ngIf="isEditing" (click)="update()">Guardar Cambios</button>
 </form>
 
@@ -56,13 +56,13 @@
 <h3 class="section-title" [appFontSize]="1.2">Cursos</h3>
 <div class="course-list-box">
     <ng-container *ngFor="let course of coursesList; index as i">
-        <div class="students-box">
+        <div class="students-box" [ngClass]="{'delete-animation': selectedIndex == course.id}">
             <div class="edit-box">
                 <!-- <img src="../../../assets/profilewoman.png" class="profile-pic" /> -->
                <div class="icons-box">
-                <mat-icon (click)="onEdit(course, i)"  class="edit-icon material-icons-outlined">edit</mat-icon>
+                <mat-icon *ngIf="(authUser$ | async)?.role == 'admin'" (click)="onEdit(course, i)"  class="edit-icon material-icons-outlined">edit</mat-icon>
                 <mat-icon (click)="navigateToDetail(course.id)" class="edit-icon material-icons-outlined">visibility</mat-icon>  
-                <mat-icon (click)="onDelete(course.id)" class="delete material-icons-outlined">close</mat-icon>   
+                <mat-icon  *ngIf="(authUser$ | async)?.role == 'admin'"(click)="onDelete(course.id)" class="delete material-icons-outlined">close</mat-icon>   
                 
                </div>
             </div>

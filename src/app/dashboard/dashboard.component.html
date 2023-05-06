@@ -1,7 +1,7 @@
 <div class="grid">
-    <app-header class="header-grid-area"></app-header>
+    <app-header [title]="title" class="header-grid-area"></app-header>
     <app-sidebar class="sidebar-grid-area"></app-sidebar>
     <main class="main-grid-area">
-        <router-outlet></router-outlet>
+        <router-outlet (activate)="setHeader()"></router-outlet>
     </main>
 </div> 

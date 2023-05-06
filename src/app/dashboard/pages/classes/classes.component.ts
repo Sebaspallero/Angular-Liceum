@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { Course } from 'src/app/core/models/course';
+import { Student } from 'src/app/core/models/students';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { CoursesService } from 'src/app/core/services/courses.service';
 
 @Component({
@@ -12,13 +14,15 @@ import { CoursesService } from 'src/app/core/services/courses.service';
 })
 export class ClassesComponent implements OnInit, OnDestroy{
 
-  private destroyed$ = new Subject() 
-  coursesList: Course[] | undefined
+  private destroyed$ = new Subject();
+  authUser$: Observable<Student | null>;
+  coursesList: Course[] = [];
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private coursesService: CoursesService
+    private coursesService: CoursesService,
+    private authService: AuthService
   )
   {
     this.coursesForm = new FormGroup({
@@ -30,26 +34,33 @@ export class ClassesComponent implements OnInit, OnDestroy{
     const currentYear = new Date().getFullYear();
     this.minDate = new Date;
     this.maxDate = new Date(currentYear + 1, 11, 31);
+
+    this.authUser$ = this.authService.getVerifiedStudent()
   }
 
   minDate: Date;
   maxDate: Date;
 
   ngOnInit(): void {
+    this.coursesService.courses
+      .pipe(takeUntil(this.destroyed$))
+        .subscribe({
+          next:(courses) =>{
+            this.coursesList = courses
+          }
+        })
     this.coursesService.getCourses()
-      .subscribe({
-        next:((course) => {this.coursesList = course})
-      })
   }
 
    ngOnDestroy(): void {
-    this.destroyed$.next(true)
+    this.destroyed$.next(true);
+    this.destroyed$.complete()
   };
 
   coursesForm: FormGroup;
 
   nameControl = new FormControl(
-    '',
+    'Photoshop',
     [
       Validators.required,
       Validators.minLength(2)
@@ -74,8 +85,12 @@ export class ClassesComponent implements OnInit, OnDestroy{
 
   onSubmit():void{
     if(this.coursesForm.valid){
-      this.coursesList?.push({...this.coursesForm.value, id: Date.now()});
-      this.coursesForm.reset();
+      this.coursesService.postCourseOnDb({...this.coursesForm.value, students: 'Sebastian Pallero'})
+      .pipe(takeUntil(this.destroyed$))
+        .subscribe(
+          course => this.coursesList?.push(course)
+        )
+        this.coursesForm.reset();
     }
     else{
       this.coursesForm.markAllAsTouched();
@@ -83,28 +98,34 @@ export class ClassesComponent implements OnInit, OnDestroy{
   };
 
   //ELIMINAR CURSO
-
- public isDeleted = false;
+  selectedIndex = -1
 
   public onDelete(id: number){
-    //Animación de borrar => [class.deleted]="isDeleted == true"
-    this.isDeleted = !this.isDeleted;
-    //Borrar
+    this.selectedIndex = id
     setTimeout(() => {
-      const deletedCourse = this.coursesList?.filter(course => course.id !== id);
-      this.coursesList = deletedCourse
-    }, 500);
-  }; 
+      this.coursesService.deleteCourseOnDb(id)
+        .pipe(takeUntil(this.destroyed$))
+        .subscribe({
+          next: (response) =>{
+            const deletedCourse = this.coursesList?.filter(course => course.id !== id);
+            this.coursesList = deletedCourse
+          }
+         })
+    }, 1500);
+  };
 
   //MOSTRAR DATOS DEL CURSO EN FORM
   courseIndex!: number;
   isEditing: boolean | undefined;
   courseId: number | any;
+  courseStudent: string | undefined
 
   public onEdit(course: any, index:any){
     this.courseIndex = index
     this.courseId = course.id
+    this.courseStudent = course.students
     this.isEditing = true
+
     this.nameControl.setValue(course.name)
     this.startDateControl.setValue(course.startDate)
     this.endDateControl.setValue(course.endDate)
@@ -114,18 +135,22 @@ export class ClassesComponent implements OnInit, OnDestroy{
   //ACTUALIZAR DATOS DEL ESTUDIANTE
 
    public update() {
-    if(this.coursesForm.valid && this.coursesList){
-      this.coursesList[this.courseIndex] = {...this.coursesForm.value, id: this.courseId,  students: { name:'Sebastian', lastName:'Pallero',}}
-      this.isEditing = false;
-      this.coursesForm.reset();
-    }
+    if(this.coursesForm.valid){
+      this.coursesService.updateCourseOnDb({...this.coursesForm.value,id: this.courseId, students: 'Sebastian Pallero'})
+        .pipe(takeUntil(this.destroyed$))
+        .subscribe({
+          next:(response) =>{
+            this.coursesList[this.courseIndex] = response
+            this.isEditing = false;
+            this.coursesForm.reset();
+          }}) 
+      } 
     else{
       this.coursesForm.markAllAsTouched();
     }
   } 
 
   //NAVEGAR AL DETALLE DEL ESTUDIANTE
-
    navigateToDetail(courseId: number):void{
     this.router.navigate([courseId],{
       relativeTo: this.activatedRoute

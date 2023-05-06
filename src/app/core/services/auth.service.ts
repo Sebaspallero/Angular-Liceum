@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, of } from 'rxjs';
 import { Student } from '../models/students';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -67,6 +67,9 @@ export class AuthService {
           this.authUser$.next(authUser);
         }
         return !!authUser
+      }),
+      catchError((err)=>{
+        return of (false)
       })
     )
   };

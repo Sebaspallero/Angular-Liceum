@@ -3,7 +3,7 @@
     <p>ID: {{course?.id}} </p>
     <p>Alumnos:</p>
     <div *ngIf="course?.students" class="info-box">
-        <p>{{course?.students.name}} {{course?.students.lastName}} </p>
+        <p>{{course?.students}} </p>
         <mat-icon (click)="onDelete()" class="delete material-icons-outlined">close</mat-icon>  
     </div>
 </div>

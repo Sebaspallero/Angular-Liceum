@@ -16,11 +16,6 @@ export const generalLinks: NavItem[] = [
         icon: 'assignment'
     },
     {
-        path: 'professors',
-        title: 'Profesores',
-        icon: 'badge'
-    },
-    {
         path: 'students',
         title: 'Alumnos',
         icon: 'school'
@@ -33,11 +28,6 @@ export const generalLinks: NavItem[] = [
 ];
 
 export const settingsLinks: NavItem[] =[
- /*    {
-        path: 'settings',
-        title: 'Ajustes',
-        icon: 'settings'
-    }, */
     {
         path: 'account',
         title: 'Cuenta',

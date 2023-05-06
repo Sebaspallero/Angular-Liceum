@@ -73,21 +73,20 @@
 <h3 class="section-title" [appFontSize]="1.2">Estudiantes</h3>
 <div class="students-list-box">
     <ng-container *ngFor="let student of studentsList; index as i">
-        <div class="students-box">
+        <!-- MODIFICAR EL PADDING-LEFT DEL STUDENTS-BOX -->
+        <div class="students-box" [ngClass]="{'delete-animation': selectedIndex == student.id}">
             <div class="edit-box">
                 <img *ngIf="student.gender == 'M'" src="../../../assets/profile.png" class="profile-pic" />
                 <img *ngIf="student.gender == 'F'" src="../../../assets/profilewoman.png" class="profile-pic" />
                <div class="icons-box">
-                <mat-icon (click)="onEdit(student, i)" class="edit-icon material-icons-outlined">edit</mat-icon>
+                <mat-icon *ngIf="(authUser$ | async)?.role == 'admin'" (click)="onEdit(student, i)" class="edit-icon material-icons-outlined">edit</mat-icon>
                 <mat-icon (click)="navigateToDetail(student.id)" class="edit-icon material-icons-outlined">visibility</mat-icon>  
-                <mat-icon (click)="onDelete(student.id)" class="delete material-icons-outlined">close</mat-icon>   
-                
+                <mat-icon *ngIf="(authUser$ | async)?.role == 'admin'" (click)="onDelete(student.id)" class="delete material-icons-outlined">close</mat-icon>   
                </div>
             </div>
             <p class="student-text">Nombre: <span [ngClass]="student.gender == 'F' ? 'female-text' : 'male-text'">{{student | fullName}}</span></p>
             <p class="student-text">Email: {{student.email}}</p>
-            <p class="student-text">Status: {{student.role}}</p>  
-            <!-- <p class="student-text">Curso: <span>{{student.course}}</span></p> -->
+            <p class="student-text">Status: {{student.role}}</p>
         </div>
     </ng-container>
 </div>

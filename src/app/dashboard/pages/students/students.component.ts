@@ -1,8 +1,9 @@
-import { Component, OnDestroy} from '@angular/core';
+import { Component, OnDestroy, OnInit} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, map, takeUntil } from 'rxjs';
 import { Student } from 'src/app/core/models/students';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { StudentsService } from 'src/app/core/services/students.service';
 
 
@@ -12,17 +13,18 @@ import { StudentsService } from 'src/app/core/services/students.service';
   styleUrls: ['./students.component.css']
 })
 
-export class StudentsComponent implements OnDestroy {
+export class StudentsComponent implements OnDestroy, OnInit {
 
   studentsList: Student[] = [];
-  private destroyed$ = new Subject() 
+  private destroyed$ = new Subject() ;
+  authUser$: Observable<Student | null>;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private studentsService: StudentsService
-
-  )
+    private studentsService: StudentsService,
+    private authService: AuthService,
+    )
   {
     this.studentsForm = new FormGroup({
       name: this.nameControl,
@@ -32,15 +34,23 @@ export class StudentsComponent implements OnDestroy {
       course: this.courseControl
     })
 
+    this.authUser$ = this.authService.getVerifiedStudent()
+  }
+
+  ngOnInit(): void {
+    this.studentsService.students
+      .pipe(takeUntil(this.destroyed$))
+        .subscribe({
+          next:(students) =>{
+            this.studentsList = students
+          }
+        })
     this.studentsService.getStudents()
-    .pipe(takeUntil(this.destroyed$))
-      .subscribe((students)=> {
-        this.studentsList = students
-      })
   }
 
    ngOnDestroy(): void {
-    this.destroyed$.next(true)
+      this.destroyed$.next(true)
+      this.destroyed$.complete()
   };
 
   studentsForm: FormGroup;
@@ -83,10 +93,13 @@ export class StudentsComponent implements OnDestroy {
   )
 
   //AGREGAR ESTUDIANTE
-
   onSubmit():void{
     if(this.studentsForm.valid){
-      this.studentsList.push({...this.studentsForm.value, id: Date.now(), role: 'student'});
+      this.studentsService.postStudentOnDb({...this.studentsForm.value, role: 'user'})
+      .pipe(takeUntil(this.destroyed$))
+        .subscribe(
+          student => this.studentsList.push(student)
+        )
       this.studentsForm.reset();
     }
     else{
@@ -96,48 +109,73 @@ export class StudentsComponent implements OnDestroy {
   };
 
   //ELIMINAR ESTUDIANTE
-
-  public isDeleted = false;
+  selectedIndex = -1;
 
   public onDelete(id: number){
-    //Animación de borrar => [class.deleted]="isDeleted == true"
-    this.isDeleted = !this.isDeleted;
-    //Borrar
+    this.selectedIndex = id;
     setTimeout(() => {
-      const deletedUser = this.studentsList.filter(student => student.id !== id);
-      this.studentsList = deletedUser
-    }, 500);
+       this.studentsService.deleteStudentOnDb(id)
+        .pipe(takeUntil(this.destroyed$))
+         .subscribe({
+          next: (response) =>{
+            const deletedUser = this.studentsList.filter(student => student.id !== id);
+            this.studentsList = deletedUser
+          }
+         })
+    }, 1500);
   };
 
   //MOSTRAR DATOS DEL ESTUDIANTE EN FORM
   studentIndex!: number;
   isEditing: boolean | undefined;
   studentId: number | undefined;
+  studentPassword: string | undefined;
+  studentToken: string | undefined;
+  studentRole: string | undefined;
 
   public onEdit(student: any, index:any){
     this.studentIndex = index
     this.studentId = student.id
+    this.studentPassword = student.password
+    this.studentToken = student.token
+  
+    this.nameControl.setValue(student.name)
+    this.lastNameControl.setValue(student.lastName)
+    this.emailControl.setValue(student.email)
+    this.genderControl.setValue(student.gender)
+    this.courseControl.setValue(student.course)
+
     this.isEditing = true
-    this.studentsForm.setValue(student)
-    
   }
 
   //ACTUALIZAR DATOS DEL ESTUDIANTE
   public update() {
     if(this.studentsForm.valid){
-      this.studentsList[this.studentIndex] = {...this.studentsForm.value, id: this.studentId}
-      this.isEditing = false;
-      this.studentsForm.reset();
-    }
+      this.studentsService.updateStudentOnDb(
+        {
+          ...this.studentsForm.value,
+          id: this.studentId,
+          password: this.studentPassword,
+          token: this.studentToken,
+          role: 'user'
+        })
+        .pipe(takeUntil(this.destroyed$))
+        .subscribe({
+          next:(response) =>{
+            this.studentsList[this.studentIndex] = response
+            this.isEditing = false;
+            this.studentsForm.reset();
+          }}) 
+    } 
     else{
       this.studentsForm.markAllAsTouched();
     }
   }
 
   //NAVEGAR AL DETALLE DEL ESTUDIANTE
-
   navigateToDetail(studentId: number):void{
-    this.router.navigate([studentId],{
+    this.router.navigate([studentId],
+    {
       relativeTo: this.activatedRoute
     })
   }

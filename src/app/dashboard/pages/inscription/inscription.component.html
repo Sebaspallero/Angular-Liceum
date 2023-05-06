@@ -1,4 +1,4 @@
-<form [formGroup]="inscriptionForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="inscriptionForm">
     <h3 class="msg-title">Anotar Estudiante</h3>
     <label>Nombre del Estudiante</label>
         <input 
@@ -40,7 +40,7 @@
             <app-form-error-helpers [formErrors]="courseControl.errors"></app-form-error-helpers>
         </ng-container>
 
-    <button *ngIf="!isEditing" type="submit">Enviar</button>
+    <button *ngIf="!isEditing" type="submit" (click)="onSubmit()">Enviar</button>
     <button *ngIf="isEditing" (click)="update()">Guardar Cambios</button>
 </form>
 
@@ -48,20 +48,17 @@
 <h3 class="section-title" [appFontSize]="1.2">Estudiantes</h3>
 <div class="inscription-list-box">
     <ng-container *ngFor="let inscription of inscriptionList; index as i">
-        <div class="students-box">
+        <div class="students-box" [ngClass]="{'delete-animation': selectedIndex == inscription.id}">
             <div class="edit-box">
-                <!-- <img *ngIf="student.gender == 'M'" src="../../../assets/profile.png" class="profile-pic" />
-                <img *ngIf="student.gender == 'F'" src="../../../assets/profilewoman.png" class="profile-pic" /> -->
                <div class="icons-box">
-                <mat-icon (click)="onEdit(inscription, i)" class="edit-icon material-icons-outlined">edit</mat-icon>
+                <mat-icon *ngIf="(authUser$ | async)?.role == 'admin'" (click)="onEdit(inscription, i)" class="edit-icon material-icons-outlined">edit</mat-icon>
                 <mat-icon (click)="navigateToDetail(inscription.id)" class="edit-icon material-icons-outlined">visibility</mat-icon>  
-                <mat-icon (click)="onDelete(inscription.id)" class="delete material-icons-outlined">close</mat-icon>   
+                <mat-icon *ngIf="(authUser$ | async)?.role == 'admin'" (click)="onDelete(inscription.id)" class="delete material-icons-outlined">close</mat-icon>   
                 
                </div>
             </div>
             <p class="student-text">Nombre: {{inscription.name}} {{inscription.lastName}}</p>
             <p class="student-text">Curso: {{inscription.course}}</p>
-            <!-- <p class="student-text">Curso: <span>{{student.course}}</span></p> -->
         </div>
     </ng-container>
 </div>

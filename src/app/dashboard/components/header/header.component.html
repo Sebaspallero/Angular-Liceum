@@ -1,13 +1,13 @@
 <header class="header-box">
     <div class="dashboard-logo-box">
-        <img src="../../../../assets/logo.png" class="logo-sidebar"/>
-        <h2 class="header-title">{{(authUser$ | async)?.name}} Dashboard</h2>
+        <h2 class="header-title">{{(authUser$ | async)?.name}} {{title | capitalize}}</h2>
     </div>
     <div class="userinfo-box">
-        <img src="../../../assets/profile.png" class="header-profile-pic">
+            <img *ngIf="(authUser$ | async)?.gender == 'M'" src="../../../../assets/profile.png" class="header-profile-pic">
+            <img *ngIf="(authUser$ | async)?.gender == 'F'" src="../../../../assets/profilewoman.png" class="header-profile-pic">
         <div class="userstatus-box">
             <p class="header-username">{{(authUser$ | async)?.name}}</p>
-            <p class="header-userstatus">{{(authUser$ | async)?.role}}</p>
+            <p class="header-userstatus">{{(authUser$ | async)?.role | capitalize}}</p>
             <!-- <p class="header-userstatus">{{currentTime$ | async}}</p> -->
         </div>
     </div>

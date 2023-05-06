@@ -8,19 +8,51 @@
       "gender": "M",
       "password": "12345",
       "token": "SKsmSCSCksnbttLBMODckns",
-      "role": "Admin",
-      "course": ""
+      "role": "admin"
     },
     {
       "name": "María",
-      "lastName": "Fernandez",
+      "lastName": "Pérez",
       "email": "maria@email.com",
       "gender": "F",
-      "password": "asdf",
-      "token": "SKsmSCSCkscjdyemdsLBMODckns",
+      "course": "Vue",
+      "id": 2,
+      "password": "12345",
+      "token": "SKsmSCSCksscscsanbttLBMODckns",
+      "role": "user"
+    },
+    {
+      "name": "Martín",
+      "lastName": "Peé",
+      "email": "martin@gmail.com",
+      "gender": "M",
+      "course": "Vue",
       "role": "user",
-      "course": "",
-      "id": 2
+      "id": 3
+    }
+  ],
+  "courses": [
+    {
+      "name": "Angular",
+      "startDate": "2023-05-10T03:00:00.000Z",
+      "endDate": "2023-05-18T03:00:00.000Z",
+      "id": 1,
+      "students": "Sebastian Pallero"
+    },
+    {
+      "name": "Photoshop",
+      "startDate": "2023-05-17T03:00:00.000Z",
+      "endDate": "2023-05-25T03:00:00.000Z",
+      "students": "Sebastian Pallero",
+      "id": 4
+    }
+  ],
+  "inscriptions": [
+    {
+      "id": 1,
+      "name": "Sebastián",
+      "lastName": "Pallero",
+      "course": "Angular"
     }
   ]
 }
