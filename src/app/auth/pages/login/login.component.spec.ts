@@ -36,17 +36,17 @@ describe('Testing of LoginComponent', ()=>{
         fixture.detectChanges();
     })
 
-    it('If the email input is empty the emailControl must be invalid', () => {
+    it('If the email input is empty, the emailControl should be invalid', () => {
         component.loginForm.setValue({ email: null, password: null })
         expect(component.emailControl.invalid).toBeTrue();
     });
 
-    it('If the password input is empty the passwordControl must be invalid', () => {
+    it('If the password input is empty, the passwordControl should be invalid', () => {
         component.loginForm.setValue({ email: null, password: null })
         expect(component.passwordControl.invalid).toBeTrue();
     });
 
-    it('If the LoginForm is ivalid, must mark the controls as touched', () => {
+    it('If the LoginForm is invalid, should mark the controls as touched', () => {
         component.loginForm.setValue({ email: null, password: null })
         const spyOnMarkAllAsTouched = spyOn(component.loginForm, 'markAllAsTouched');
         
@@ -55,7 +55,7 @@ describe('Testing of LoginComponent', ()=>{
         expect(spyOnMarkAllAsTouched).toHaveBeenCalled();
       });
     
-      it('Si el loginForm es valido, debe llamar al metodo login del AuthService', () => {
+      it('If loginForm is valid, should call method login from AuthService', () => {
         component.loginForm.setValue({ email: 'sebastian@email.com', password: '12345' });
         const spyOnAuthServiceLogin = spyOn(TestBed.inject(AuthService), 'login');
         component.onLogin();
