@@ -5,7 +5,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { LoginGuard } from './auth/guards/login.guard';
 
-const routes: Routes = [
+ export const routes: Routes = [
   {
     path: 'dashboard',
     canActivate:[AuthGuard],

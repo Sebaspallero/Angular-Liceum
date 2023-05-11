@@ -5,6 +5,7 @@ export interface Student{
     gender: string,
     course?: string,
     role: string,
+    password?:string,
     token: string,
     id: number
   }

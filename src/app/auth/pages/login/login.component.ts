@@ -26,7 +26,7 @@ export class LoginComponent {
     ]
   );
 
-  logingForm = new FormGroup(
+  loginForm = new FormGroup(
     {
       email: this.emailControl,
       password: this.passwordControl
@@ -38,13 +38,13 @@ export class LoginComponent {
   ){}
 
   onLogin():void {
-    if(this.logingForm.valid){
-      console.log(this.logingForm.value);
-      this.authService.login(this.logingForm.value as loginFormValue)
+    if(this.loginForm.valid){
+      console.log(this.loginForm.value);
+      this.authService.login(this.loginForm.value as loginFormValue)
     }
     else{
       console.log('invalid')
-      this.logingForm.markAllAsTouched();
+      this.loginForm.markAllAsTouched();
   
     }
   }
