@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { UsersComponent } from './users.component';
+import { UserDetailComponent } from './user-detail/user-detail.component';
 
 
 
@@ -14,10 +15,10 @@ import { UsersComponent } from './users.component';
         path: '',
         component: UsersComponent
       },
-      /* {
+      {
         path: ':id',
-        component: StudentDetailComponent
-      } */
+        component: UserDetailComponent
+      }
     ])
   ],
   exports:[

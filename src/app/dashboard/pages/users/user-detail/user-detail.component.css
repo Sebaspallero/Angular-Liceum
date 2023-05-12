@@ -1,0 +1,28 @@
+.student-detail-box{
+    background-color: var(--white-clr);
+    border-radius: 15px;
+    width: 300px;
+    padding: 1em;
+    margin: 1.5em;
+    margin-left: 0;
+    box-shadow: var(--box-shadow);
+}
+
+.info-box{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.delete{
+    color: var(--accent-clr);
+    font-weight: bold;
+    font-size: var(--fs-title);
+    cursor: pointer;
+    transition: .3s ease-in-out;
+    
+}
+
+.delete:hover{
+    transform: scale(1.1);
+}

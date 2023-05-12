@@ -1,0 +1,94 @@
+
+.section-title{
+    font-size: var(--fs-subtitle);
+    color: var(--dark-blue-clr);
+    margin-bottom: 1em;
+}
+
+.students-list-box{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 4em;
+}
+
+ .students-box{
+    background-color: var(--white-clr);
+    border-radius: 15px;
+    width: 300px;
+    padding: 1em;
+    margin: 1.5em;
+    margin-left: 0;
+    box-shadow: var(--box-shadow);
+ }
+
+ .edit-box{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+ }
+
+
+ .student-text{
+    font-size: var(--fs-text);
+    color: var(--dark-blue-clr);
+ }
+
+ .female-text{
+    font-size: var(--fs-text);
+    color: rgba(233, 148, 162, 0.925);
+ }
+
+ .male-text{
+    font-size: var(--fs-text);
+    color: var(--blue-clr);
+ }
+
+ .profile-pic{
+    height: 50px;
+    width: 50px;
+    border-radius: .3em;
+    margin-bottom: .5em;
+}
+
+.icons-box{
+    display: flex;  
+    flex-direction: row;
+    gap: .3em;
+   
+}
+
+.delete{
+    color: var(--accent-clr);
+    font-weight: bold;
+    font-size: var(--fs-title);
+    cursor: pointer;
+    transition: .3s ease-in-out;
+    
+}
+
+.delete:hover{
+    transform: scale(1.1);
+}
+
+.delete-animation{
+    animation: delete-animation 1s .6s ease-in-out;
+}
+
+@keyframes delete-animation {
+    0% { transform: scale(1);}
+    50% { transform: scale(1.1);}
+    100% { transform: scale(.2); }
+}
+
+.edit-icon{
+    color:var(--dark-blue-clr);
+  
+    cursor: pointer;
+    transition: .3s ease-in-out;
+    
+}
+
+.edit-icon:hover{
+    transform: scale(1.1);
+}
